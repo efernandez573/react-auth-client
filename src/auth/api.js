@@ -64,3 +64,20 @@ export const changePassword = (passwords, user) => {
     })
   })
 }
+export const createPost = user => {
+  return fetch(apiUrl + '/create-post', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Token token=${user.token}`
+    },
+    body: JSON.stringify ({
+      post: {
+        imgurl: '',
+        title: '',
+        link: '',
+        description: ''
+      }
+    })
+  })
+}
