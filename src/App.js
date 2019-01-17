@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
 import './App.scss'
 import { Route, Link } from 'react-router-dom'
-
+// TOP LEVEL COMPONENT
 import AuthenticatedRoute from './auth/components/AuthenticatedRoute'
 import Header from './header/Header'
 import SignUp from './auth/components/SignUp'
 import SignIn from './auth/components/SignIn'
 import SignOut from './auth/components/SignOut'
 import ChangePassword from './auth/components/ChangePassword'
+import PostContainer from './auth/components/PostContainer'
+import AllBlog from './auth/components/AllBlog'
+import Home from './auth/components/Home'
+
 
 class App extends Component {
   constructor () {
@@ -37,10 +41,13 @@ class App extends Component {
     const { flashMessage, flashType, user } = this.state
 
     return (
+      // takes out the div requirement
+
       <React.Fragment>
+        <PostContainer />
         <Header user={user} />
         {flashMessage && <h3 className={flashType}>{flashMessage}</h3>}
-        
+
         <main className="container">
           <Route path='/sign-up' render={() => (
             <SignUp flash={this.flash} setUser={this.setUser} />
@@ -53,6 +60,9 @@ class App extends Component {
           )} />
           <AuthenticatedRoute user={user} path='/change-password' render={() => (
             <ChangePassword flash={this.flash} user={user} />
+          )} />
+          <AuthenticatedRoute user={user} path='/index' render={() => (
+            <Home flash={this.flash} user={user} />
           )} />
         </main>
       </React.Fragment>
