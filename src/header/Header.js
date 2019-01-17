@@ -7,9 +7,6 @@ const authenticatedOptions = (
   <React.Fragment>
     <Link to="/change-password">Change Password</Link>
     <Link to="/sign-out">Sign Out</Link>
-    <Link to="/posts">BlogPost</Link>
-    <Link to="/post-create">Create</Link>
-    <Link to="/post-update">Update</Link>
   </React.Fragment>
 )
 
@@ -17,7 +14,6 @@ const unauthenticatedOptions = (
   <React.Fragment>
     <Link to="/sign-up">Sign Up</Link>
     <Link to="/sign-in">Sign In</Link>
-
   </React.Fragment>
 )
 
@@ -26,11 +22,10 @@ const alwaysOptions = (
     <Link to="/">Home</Link>
   </React.Fragment>
 )
-/* if there is a registered user then welcome them*/
 
 const Header = ({ user }) => (
   <header className="main-header">
-    <h1>Lyft, But For Taxis</h1>
+    <h1>Uber, But For Taxis</h1>
     <nav>
       { user && <span>Welcome, {user.email}</span>}
       { user ? authenticatedOptions : unauthenticatedOptions }
