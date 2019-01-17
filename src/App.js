@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './App.scss'
 import { Route, Link } from 'react-router-dom'
+
 // TOP LEVEL COMPONENT
 import AuthenticatedRoute from './auth/components/AuthenticatedRoute'
 import Header from './header/Header'
@@ -9,9 +10,11 @@ import SignIn from './auth/components/SignIn'
 import SignOut from './auth/components/SignOut'
 import ChangePassword from './auth/components/ChangePassword'
 import PostContainer from './auth/components/PostContainer'
-import AllBlog from './auth/components/AllBlog'
-import Home from './auth/components/Home'
+import PostIndex from './posts/PostIndex'
+import PostCreate from './posts/PostCreate'
+import PostUpdate from './posts/PostUpdate'
 
+import { axiosGetBlogpostAuthenticated } from './posts/blogApi'
 
 class App extends Component {
   constructor () {
@@ -20,11 +23,38 @@ class App extends Component {
     this.state = {
       user: null,
       flashMessage: '',
-      flashType: null
+      flashType: null,
+      post: []
     }
   }
 
-  setUser = user => this.setState({ user })
+  getAllBlogpost = () => {
+    // getBlogpost()
+    //   .then(res => res.ok ? res : new Error())
+    //   .then(res => res.json())
+    //   .then(res => this.setState({ post: res.post }))
+    //   .then(() => this.props.flash('Successfully got all Blog Posts', 'flash-success'))
+    //   .catch(() => console.error('oh no got an error'))
+
+    // axiosGetBlogpost()
+    //   .then(res => this.setState({ movies: res.data.post }))
+    //   .then(() => this.props.flash('Successfully got all Blog Post', 'flash-success'))
+    //   .catch(() => console.error('oh no got an error'))
+
+    // getBlogpostAuthenticated(this.props.user)
+    //   .then(res => res.ok ? res : new Error())
+    //   .then(res => res.json())
+    //   .then(res => this.setState({ post: res.post }))
+    //   .then(() => this.props.flash('Successfully got all Blog Post', 'flash-success'))
+    //   .catch(() => console.error('oh no got an error'))
+
+    axiosGetBlogpostAuthenticated(this.state.user)
+      .then(res => this.setState({ post: res.data.post }))
+      .then(() => this.flash('Successfully got all Blog Post', 'flash-success'))
+      .catch((err) => console.error(err))
+  }
+
+  setUser = user => this.setState({ user }, this.getAllBlogpost)
 
   clearUser = () => this.setState({ user: null })
 
@@ -41,29 +71,65 @@ class App extends Component {
     const { flashMessage, flashType, user } = this.state
 
     return (
-      // takes out the div requirement
-
       <React.Fragment>
-        <PostContainer />
-        <Header user={user} />
-        {flashMessage && <h3 className={flashType}>{flashMessage}</h3>}
+        <Header
+          user={user} />
+        {flashMessage && <h3
+          className={flashType}>{flashMessage}</h3>}
 
         <main className="container">
-          <Route path='/sign-up' render={() => (
-            <SignUp flash={this.flash} setUser={this.setUser} />
-          )} />
-          <Route path='/sign-in' render={() => (
-            <SignIn flash={this.flash} setUser={this.setUser} />
-          )} />
-          <AuthenticatedRoute user={user} path='/sign-out' render={() => (
-            <SignOut flash={this.flash} clearUser={this.clearUser} user={user} />
-          )} />
-          <AuthenticatedRoute user={user} path='/change-password' render={() => (
-            <ChangePassword flash={this.flash} user={user} />
-          )} />
-          <AuthenticatedRoute user={user} path='/index' render={() => (
-            <Home flash={this.flash} user={user} />
-          )} />
+          <Route path='/sign-up'
+            render={() => (
+              <SignUp
+                flash={this.flash}
+                setUser={this.setUser} />
+            )} />
+          <Route path='/sign-in'
+            render={() => (
+              <SignIn
+                flash={this.flash}
+                setUser={this.setUser} />
+            )} />
+          <AuthenticatedRoute
+            user={user} path='/sign-out'
+            render={() => (
+              <SignOut
+                flash={this.flash}
+                clearUser={this.clearUser}
+                user={user} />
+            )} />
+          <AuthenticatedRoute
+            user={user} path='/change-password'
+            render={() => (
+              <ChangePassword
+                flash={this.flash}
+                user={user} />
+            )} />
+          <AuthenticatedRoute
+            user={user} path='/posts'
+            render={() => (
+              <PostIndex
+                post={this.state.post}
+                flash={this.flash}
+                user={user} />
+            )} />
+          <AuthenticatedRoute
+            user={user} path='/post-create'
+            render={() => (
+              <PostCreate
+                getAllBlogpost={this.getAllBlogpost}
+                flash={this.flash}
+                user={user} />
+            )} />
+          <AuthenticatedRoute
+            user={user} path='/post-update'
+            render={() => (
+              <PostUpdate
+                post={this.state.post}
+                getAllBlogpost={this.getAllBlogpost}
+                flash={this.flash}
+                user={user} />
+            )} />
         </main>
       </React.Fragment>
     )

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { postBlogpost, axiosPostBlogpost } from './PostApi'
+import { axiosPostBlogpost } from './blogApi'
 
 export default class PostCreate extends Component {
   constructor(props) {
