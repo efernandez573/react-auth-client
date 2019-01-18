@@ -71,3 +71,12 @@ export const axiosPatchBlogpost = (data, user) => {
     }
   })
 }
+export const axiosDeleteBlogpost = (data, user) => {
+  const { id } = data
+  delete data.id
+  return axios.delete(apiUrl + '/posts/' + id, { post: { ... data }}, {
+    headers: {
+      'Authorization': `Token token=${user.token}`,
+    }
+  })
+}

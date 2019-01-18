@@ -14,7 +14,9 @@ import PostCreate from './posts/PostCreate'
 import PostUpdate from './posts/PostUpdate'
 import PostDelete from './posts/PostDelete'
 
-import { axiosGetBlogpostAuthenticated, axiosPostBlogpost, axiosPatchBlogpost } from './posts/blogApi'
+import { axiosGetBlogpostAuthenticated, axiosPostBlogpost, axiosPatchBlogpost, axiosDeleteBlogpost } from './posts/blogApi'
+
+// adapted from class notes/template
 
 class App extends Component {
   constructor () {

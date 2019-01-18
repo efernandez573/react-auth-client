@@ -1,3 +1,4 @@
+
 $charcoal: #bbb;
 
 .main-header {
@@ -6,10 +7,12 @@ $charcoal: #bbb;
   display: flex;
   height: 100px;
   padding: 0 20px;
+  background-color: purple;
+  font-family: sans-serif;
 
   a,
   span {
-    font-size: 1.2em;
+    font-size: 2.2em;
     margin: 0 15px;
   }
 }
@@ -24,7 +27,7 @@ $charcoal: #bbb;
 @media (max-width: 600px) {
   .main-header {
     flex-direction: column;
-    font-size: 0.7em;
+    font-size: 0.8em;
     height: auto;
     padding: 10px;
 
