@@ -8,7 +8,6 @@ import SignUp from './auth/components/SignUp'
 import SignIn from './auth/components/SignIn'
 import SignOut from './auth/components/SignOut'
 import ChangePassword from './auth/components/ChangePassword'
-<<<<<<< HEAD
 import PostIndex from './posts/PostIndex'
 import PostCreate from './posts/PostCreate'
 import PostUpdate from './posts/PostUpdate'
@@ -17,8 +16,6 @@ import PostDelete from './posts/PostDelete'
 import { axiosGetBlogpostAuthenticated, axiosPostBlogpost, axiosPatchBlogpost, axiosDeleteBlogpost } from './posts/blogApi'
 
 // adapted from class notes/template
-=======
->>>>>>> origin/master
 
 class App extends Component {
   constructor () {
@@ -27,7 +24,6 @@ class App extends Component {
     this.state = {
       user: null,
       flashMessage: '',
-<<<<<<< HEAD
       flashType: null,
       posts: []
     }
@@ -61,13 +57,12 @@ class App extends Component {
   }
 
   setUser = user => this.setState({ user }, this.getAllBlogpost)
-=======
       flashType: null
-    }
-  }
+  )
+}
+}
 
   setUser = user => this.setState({ user })
->>>>>>> origin/master
 
   clearUser = () => this.setState({ user: null })
 
@@ -86,7 +81,6 @@ class App extends Component {
     return (
       <React.Fragment>
         <Header user={user} />
-<<<<<<< HEAD
         {flashMessage && <h3
           className={flashType}>{flashMessage}</h3>}
 
@@ -153,9 +147,9 @@ class App extends Component {
                 flash={this.flash}
                 user={user} />
             )} />
-=======
+
         {flashMessage && <h3 className={flashType}>{flashMessage}</h3>}
-        
+
         <main className="container">
           <Route path='/sign-up' render={() => (
             <SignUp flash={this.flash} setUser={this.setUser} />
@@ -169,7 +163,6 @@ class App extends Component {
           <AuthenticatedRoute user={user} path='/change-password' render={() => (
             <ChangePassword flash={this.flash} user={user} />
           )} />
->>>>>>> origin/master
         </main>
       </React.Fragment>
     )
