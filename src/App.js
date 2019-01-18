@@ -9,12 +9,12 @@ import SignUp from './auth/components/SignUp'
 import SignIn from './auth/components/SignIn'
 import SignOut from './auth/components/SignOut'
 import ChangePassword from './auth/components/ChangePassword'
-import PostContainer from './auth/components/PostContainer'
 import PostIndex from './posts/PostIndex'
 import PostCreate from './posts/PostCreate'
 import PostUpdate from './posts/PostUpdate'
+import PostDelete from './posts/PostDelete'
 
-import { axiosGetBlogpostAuthenticated } from './posts/blogApi'
+import { axiosGetBlogpostAuthenticated, axiosPostBlogpost, axiosPatchBlogpost } from './posts/blogApi'
 
 class App extends Component {
   constructor () {
@@ -24,7 +24,7 @@ class App extends Component {
       user: null,
       flashMessage: '',
       flashType: null,
-      post: []
+      posts: []
     }
   }
 
@@ -37,7 +37,7 @@ class App extends Component {
     //   .catch(() => console.error('oh no got an error'))
 
     // axiosGetBlogpost()
-    //   .then(res => this.setState({ movies: res.data.post }))
+    //   .then(res => this.setState({ post: res.data.post }))
     //   .then(() => this.props.flash('Successfully got all Blog Post', 'flash-success'))
     //   .catch(() => console.error('oh no got an error'))
 
@@ -49,7 +49,8 @@ class App extends Component {
     //   .catch(() => console.error('oh no got an error'))
 
     axiosGetBlogpostAuthenticated(this.state.user)
-      .then(res => this.setState({ post: res.data.post }))
+      .then(res => {console.log('in axios getBlogpostAuthenticated and res is ', res); return res})
+      .then(res => this.setState({ post: res.data.posts }))
       .then(() => this.flash('Successfully got all Blog Post', 'flash-success'))
       .catch((err) => console.error(err))
   }
@@ -72,8 +73,7 @@ class App extends Component {
 
     return (
       <React.Fragment>
-        <Header
-          user={user} />
+        <Header user={user} />
         {flashMessage && <h3
           className={flashType}>{flashMessage}</h3>}
 
@@ -109,6 +109,7 @@ class App extends Component {
             user={user} path='/posts'
             render={() => (
               <PostIndex
+                getAllBlogpost={this.getAllBlogpost}
                 post={this.state.post}
                 flash={this.flash}
                 user={user} />
@@ -125,6 +126,15 @@ class App extends Component {
             user={user} path='/post-update'
             render={() => (
               <PostUpdate
+                post={this.state.post}
+                getAllBlogpost={this.getAllBlogpost}
+                flash={this.flash}
+                user={user} />
+            )} />
+          <AuthenticatedRoute
+            user={user} path='/post-delete'
+            render={() => (
+              <PostDelete
                 post={this.state.post}
                 getAllBlogpost={this.getAllBlogpost}
                 flash={this.flash}

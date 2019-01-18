@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 
 import { axiosPatchBlogpost } from './blogApi'
 
-export default class BlogpostUpdate extends Component {
+export default class PostUpdate extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
+      id: '',
       title: '',
       imgurl: '',
       link: '',
@@ -22,10 +23,11 @@ export default class BlogpostUpdate extends Component {
   changeBlogpostData = id => {
     const post = this.props.post.find(post => String(post.id) === String(id))
     this.setState({
+      id: post.id ,
       title: post.title || '',
       imgurl: post.imgurl || '',
       link: post.link || '',
-      description: post.description
+      description: post.description || ''
     })
   }
 
@@ -66,10 +68,12 @@ export default class BlogpostUpdate extends Component {
 
 
   render() {
-
-    const SelectOptions = this.props.post.map((post, index) => {
-      return<option key={ index } value={ post.id }>{ post.title } (ID: { post.id })</option>
-    })
+    let SelectOptions
+    if (this.props.posts) {
+      SelectOptions = this.props.posts.map((post, index) => {
+        return<option key={ index } value={ post.id }>{ post.title } (ID: { post.id })</option>
+      })
+    }
 
     return (
       <form
@@ -87,25 +91,25 @@ export default class BlogpostUpdate extends Component {
         <label htmlFor="title">Title</label>
         <input
           name="title"
-          value={ this.post.title }
+          value={ this.state.title }
           onChange={ this.handleInputChange } />
 
         <label htmlFor="imgurl">Insert Image Url</label>
         <input
           name="imgurl"
-          value={ this.post.imgurl }
+          value={ this.state.imgurl }
           onChange={ this.handleInputChange } />
 
         <label htmlFor="link">Link</label>
         <input
           name="link"
-          value={ this.post.link }
+          value={ this.state.link }
           onChange={ this.handleInputChange } />
 
         <label htmlFor="description">Description</label>
         <input
           name="description"
-          value={ this.post.description }
+          value={ this.state.description }
           onChange={ this.handleInputChange } />
 
         <button type="submit">Update Blogpost</button>

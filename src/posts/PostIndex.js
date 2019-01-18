@@ -1,8 +1,10 @@
 import React from 'react'
 
-const BlogpostIndex = props => {
+const PostIndex = props => {
+  console.log(props)
 
-  const Blogpost = props.post.map((post, index) => {
+  const Post = props.post.map((post, index) => {
+
     return <div key={ index }>
       <h3>{ post.title } (ID: { post.id })</h3>
       <ul>
@@ -14,10 +16,10 @@ const BlogpostIndex = props => {
   })
   return (
     <div>
-      { Blogpost }
+      { Post }
     </div>
   )
 
 }
 
-export default BlogpostIndex
+export default PostIndex

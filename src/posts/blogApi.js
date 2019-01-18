@@ -8,9 +8,9 @@ const apiUrl = 'http://localhost:4741'
 //   })
 // }
 
-export const axiosGetBlogpost = () => {
-  return axios.get(apiUrl + '/posts')
-}
+// export const axiosGetBlogpost = () => {
+//   return axios.get(apiUrl + '/posts')
+// }
 
 // export const getBlogpostAuthenticated = (user) => {
 //   return fetch(apiUrl + '/posts', {
